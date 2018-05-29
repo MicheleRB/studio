@@ -1,0 +1,12 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+    {% if total_by_year %}
+        <ul>
+        {% for fattura_year in total_by_year %}
+            <li>{{ fattura_year.anno_fattura }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>no data</p>
+    {% endif %}
+{% endblock %}
