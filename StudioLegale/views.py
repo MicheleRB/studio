@@ -16,15 +16,11 @@ from django.http import HttpResponse
 from django.template import loader
 from django.db.models import Sum
 
-
-def dashboard(request):
-    total_by_year = Fatture.objects.all().values('anno_fattura').annotate(total=Sum('totale')).order_by('-anno_fattura')
+@login_required(login_url='admin/login')
+def index(request):
     template = loader.get_template('studiolegale/base.html')
-    context = {
-        'total_by_year': total_by_year,
-    }
+    context = {'title' : 'Pagina iniziale',}
     return HttpResponse(template.render(context, request))
-
 
 
 def fattura_pdf(request, id_fattura):

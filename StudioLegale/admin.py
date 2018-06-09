@@ -19,15 +19,19 @@ import textwrap
 
 
 class PercentualiAdmin(admin.ModelAdmin):
+    list_display = ('descrizione', 'valore')
     model = Percentuali
 
 class StudioSettoreClienteAdmin(admin.ModelAdmin):
+    list_display = ('descrizione', 'sigla')
     model = StudioSettoreCliente
 
 class StudioSettoreFattura1Admin(admin.ModelAdmin):
+    list_display = ('descrizione', 'sigla')
     model = StudioSettoreFattura1
 
 class StudioSettoreFattura2Admin(admin.ModelAdmin):
+    list_display = ('descrizione', 'sigla')
     model = StudioSettoreFattura2
 
 

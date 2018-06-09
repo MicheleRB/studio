@@ -1,12 +1,6 @@
-{% extends "admin/base_site.html" %}
-{% block content %}
-    {% if total_by_year %}
-        <ul>
-        {% for fattura_year in total_by_year %}
-            <li>{{ fattura_year.anno_fattura }}</li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>no data</p>
+{% extends "admin/base.html" %}
+{% block content_title %}
+    {% if title %}
+        <header><h1><a href='/admin'>{{ title }}</a></h1></header>
     {% endif %}
 {% endblock %}
