@@ -127,15 +127,6 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 GRAPPELLI_INDEX_DASHBOARD = 'Studio.dashboard.CustomIndexDashboard'
-GRAPPELLI_ADMIN_TITLE = 'Avvocato Sara Rossi'
 
-BUSINESS_DETAIL = (
-    u'Avvocato Sara Rossi',
-    u'Via Garibaldà 9/c 24122 Bergamo',
-    u'Telefono 035/223218',
-    u'Email sara@avvsararossi.it',
-    u'Pec Email sara.rossi@bergamo.pecavvocati.it',
-    u'Codice Fiscale RSSSRA68L42A794F',
-    u'Partita Iva 02490610165',
-)
+
 
