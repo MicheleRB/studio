@@ -50,7 +50,7 @@ def draw_invoice_detail(canvas, invoice):
     invoice_detail = [[
         u'Fattura numero %s' % (invoice.id_fattura),
         '',
-        u'Bergamo, li %s' % invoice.data_fattura.isoformat(),
+        u'Bergamo, li %s' % invoice.data_fattura.strftime("%d-%m-%Y"),
                     ],
         []
     ]
@@ -67,21 +67,27 @@ def draw_invoice_detail(canvas, invoice):
     ])
     tw, th, = table.wrapOn(canvas, 2 * cm, 19 * cm)
     table.drawOn(canvas, 2 * cm, -5.5 * cm)
-
+    cf=''
+    vat=''
     if invoice.cliente_id.persona_giuridica:
         vat = 'Partita iva : %s' % invoice.cliente_id.partita_iva
     else:
-        vat = 'Codice fiscale : %s' % invoice.cliente_id.codice_fiscale
+        if invoice.cliente_id.partita_iva:
+            vat = 'Partita iva : %s' % invoice.cliente_id.partita_iva
+            cf = 'Codice fiscale : %s' % invoice.cliente_id.codice_fiscale
+        else:
+            cf = 'Codice fiscale : %s' % invoice.cliente_id.codice_fiscale
     customer_detail_list = (
         u'Spett.le',
         invoice.cliente_id.ragione_sociale,
         invoice.cliente_id.indirizzo,
         invoice.cliente_id.cap + ' ' + invoice.cliente_id.citta + ' ' + invoice.cliente_id.provincia,
-        vat)
+        vat,
+        cf)
     customer_detail=[]
     for i in customer_detail_list:
         customer_detail.append([i])
-    table = Table(customer_detail, colWidths=[6 * cm], rowHeights=[12, 12, 12, 12, 12])
+    table = Table(customer_detail, colWidths=[6 * cm], rowHeights=[12, 12, 12, 12, 12, 12])
     table.setStyle([
         ('FONT', (0, 0), (-1, -1), 'Helvetica-Oblique'),
         ('FONTSIZE', (0, 0), (-1, -1), 8),

@@ -67,17 +67,15 @@ class Clienti(models.Model):
     def clean(self):
         if self.persona_giuridica and not self.partita_iva:
             raise ValidationError({'partita_iva': _('Manca Partita Iva per persona giuriduca')})
-        if not self.persona_giuridica and  self.partita_iva:
-            raise ValidationError({'persona_giuridica': _('Manca il flag persona giuriduca per Partita Iva ')})
         if not self.persona_giuridica and not self.codice_fiscale:
-                raise ValidationError({'codice_fiscale': _('Manca codice_fiscale')})
+            raise ValidationError({'codice_fiscale': _('Manca codice_fiscale')})
 
     @property
     def short_description(self):
         if self.persona_giuridica:
-            desc = '%s (%s)' % (self.ragione_sociale ,self.partita_iva)
+            desc = '%s (%s)' % (self.ragione_sociale, self.partita_iva)
         else:
-            desc = '%s (%s)' % (self.ragione_sociale ,self.codice_fiscale)
+            desc = '%s (%s)' % (self.ragione_sociale, self.codice_fiscale)
         return desc
 
     @staticmethod
