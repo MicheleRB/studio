@@ -150,16 +150,16 @@ class FattureAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Testat Fattura', {
             'fields': (('cliente_id', ),
-                       ('studi_settore_1', 'studi_settore_2'),
+                       #('studi_settore_1', 'studi_settore_2'),
                        )
         }),
         ('Fattura', {
-            'fields': (('numero_fattura', 'data_fattura', 'id_fattura'),
+            'fields': (('data_fattura', 'numero_fattura', 'id_fattura'),
                        ('descrizione'),
                        ('imponibile', 'anticipazioni'),
-                       ('cpa', 'perc_cpa'),
-                       ('iva', 'perc_iva'),
-                       ('ritenuta', 'perc_ritenuta'),
+                       ('perc_cpa', 'cpa'),
+                       ('perc_iva', 'iva'),
+                       ('perc_ritenuta', 'ritenuta'),
                        ('subtotale', 'totale'),
                        )
         }),
@@ -171,7 +171,7 @@ class FattureAdmin(admin.ModelAdmin):
     autocomplete_lookup_fields = {
         'fk': ['cliente_id'],
     }
-    list_filter = ('data_fattura', 'cliente_id')
+    list_filter = ('data_fattura', 'anno_fattura', 'cliente_id')
 
     change_form_template = 'invoice/fatture/change_form.html'
     add_form_template = 'invoice/fatture/change_form.html'
@@ -181,13 +181,11 @@ class FattureAdmin(admin.ModelAdmin):
         return obj.cliente_id.persona_giuridica
 
     get_persona_giuridica.boolean = True
-    get_persona_giuridica.admin_order_field = 'pers.giur.'  # Allows column order sorting
     get_persona_giuridica.short_description = 'Pers.Giur.'
 
     def get_shorten_description(self, obj):
         return textwrap.shorten(obj.descrizione, width=120, placeholder="...")
 
-    get_shorten_description.admin_order_field = 'descrizione corta'  # Allows column order sorting
     get_shorten_description.short_description = 'Descrizione corta'
 
 

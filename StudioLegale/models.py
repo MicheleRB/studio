@@ -122,8 +122,6 @@ class Fatture(models.Model):
     note = models.CharField("note", max_length=512, null=True, blank=True)
 
 
-
-
     def clean(self):
         if self.data_fattura and not self.id_fattura:
             last_fattura = Fatture.objects.filter(data_fattura__year=self.data_fattura.year).order_by('numero_fattura').last()
