@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 from django.db.models.functions import ExtractYear
 from django.db.models import Sum
+import math
 
 
 class Percentuali(models.Model):
@@ -140,6 +141,7 @@ class Fatture(models.Model):
         if self.numero_fattura and self.data_fattura:
             self.id_fattura = str(self.numero_fattura) + '-' + str(self.data_fattura.year)
             self.anno_fattura = self.data_fattura.year
+            self.trimestre_fattura = '%s-%s' % (self.data_fattura.year, math.ceil(float(self.data_fattura.month) / 3))
 
 
     def __str__(self):
