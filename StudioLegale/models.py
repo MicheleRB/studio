@@ -120,6 +120,8 @@ class Fatture(models.Model):
     studi_settore_2 = models.ForeignKey(StudioSettoreFattura2, related_name="+", verbose_name="studi settore aree specialistiche", null=True,
                                       blank=True, on_delete=models.DO_NOTHING)
     note = models.CharField("note", max_length=512, null=True, blank=True)
+    trimestre_fattura = models.CharField('Trimestre fattura', max_length=7, null=True, blank=True)
+
 
 
     def clean(self):

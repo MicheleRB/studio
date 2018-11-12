@@ -23,7 +23,7 @@ class CustomIndexDashboard(Dashboard):
 
 
         # append an app list module for "Applications"
-        self.children.append(modules.AppList(
+        self.children.append(modules.ModelList(
             _('Avvocato Sara Rossi'),
             collapsible=True,
             column=1,
@@ -31,7 +31,20 @@ class CustomIndexDashboard(Dashboard):
             exclude=('django.contrib.*','StudioLegale.models.Perce*', 'StudioLegale.models.Studi*', ),
         ))
 
-        self.children.append(modules.AppList(
+        self.children.append(modules.LinkList(
+            _('Report'),
+            column=1,
+            children=(
+                {
+                    'title': 'Report trimestrale',
+                    'url': '/',
+                    'external': False,
+                    'description': 'Report trimestrale',
+                },
+            )
+        ))
+
+        self.children.append(modules.ModelList(
             _('Parametrizzazioni'),
             collapsible=True,
             column=2,

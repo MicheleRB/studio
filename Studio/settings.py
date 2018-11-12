@@ -25,6 +25,7 @@ SECRET_KEY = 'gbaz3h_2p=jaqu+$is5394m%5@%co3w20kch%ee!ia894)qa17'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = []
 
 
@@ -34,12 +35,14 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'grappelli.dashboard',
     'grappelli',
+    'table',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_admin_row_actions',
+    'django.contrib.humanize',
     'StudioLegale.apps.InvoiceConfig',
 ]
 
@@ -74,7 +77,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Studio.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -124,9 +126,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'StudioLegale/static')
 STATIC_URL = '/static/'
 GRAPPELLI_INDEX_DASHBOARD = 'Studio.dashboard.CustomIndexDashboard'
+GRAPPELLI_ADMIN_TITLE = 'Avvocato Sara Rossi'
 
-
+BUSINESS_DETAIL = (
+    u'Avvocato Sara Rossi',
+    u'Via Garibaldà 9/c 24122 Bergamo',
+    u'Telefono 035/223218',
+    u'Email sara@avvsararossi.it',
+    u'Pec Email sara.rossi@bergamo.pecavvocati.it',
+    u'Codice Fiscale RSSSRA68L42A794F',
+    u'Partita Iva 02490610165',
+)
 

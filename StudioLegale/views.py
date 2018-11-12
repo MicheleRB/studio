@@ -15,14 +15,20 @@ from .draw_pdf import draw_footer, draw_description, draw_invoice_detail, draw_h
 from django.http import HttpResponse
 from django.template import loader
 from django.db.models import Sum
+from django.db.models import Max
+import datetime
+
+from django.shortcuts import render
+from .models import Fatture
+
 
 @login_required(login_url='admin/login')
 def index(request):
-    template = loader.get_template('studiolegale/base.html')
-    context = {'title' : 'Pagina iniziale',}
+    template = loader.get_template('studiolegale/index.html')
+    context = {'title' : 'Report', 'redirect': 'Pagina iniziale', }
     return HttpResponse(template.render(context, request))
 
-
+@login_required(login_url='admin/login')
 def fattura_pdf(request, id_fattura):
     fattura = Fatture.objects.get(id_fattura=id_fattura)
     # Create the HttpResponse object with the appropriate PDF headers.
@@ -48,3 +54,37 @@ def fattura_pdf(request, id_fattura):
     canvas.showPage()
     canvas.save()
     return response
+
+@login_required(login_url='admin/login')
+def report(request):
+    data = {}
+    qdata=[]
+    year_ft = datetime.datetime.now().year
+    fatture = Fatture.objects.filter(data_fattura__year=year_ft).order_by('-data_fattura')
+
+    quarter = fatture.values('trimestre_fattura').annotate(Sum_iva=Sum('iva'),
+                                                 Sum_totale=Sum('totale'),
+                                                 LastDt=Max('data_fattura'),
+                                                 ).order_by('-trimestre_fattura').distinct()
+    for q in quarter:
+        qdata.append(q)
+    data[year_ft] = qdata
+
+    year_ft = datetime.datetime.now().year -1
+    fatture = Fatture.objects.filter(data_fattura__year=year_ft).order_by('-data_fattura')
+
+    quarter1 = fatture.values('trimestre_fattura').annotate(Sum_iva=Sum('iva'),
+                                                                   Sum_totale=Sum('totale'),
+                                                                   LastDt=Max('data_fattura'),
+                                                                   ).order_by('-trimestre_fattura').distinct()
+    qdata = []
+    for q in quarter1:
+        qdata.append(q)
+    data[year_ft] = qdata
+    print(data)
+    template = loader.get_template('studiolegale/index.html')
+    context = {'title': 'Report', 'data': data, }
+    return HttpResponse(template.render(context, request))
+
+
+
